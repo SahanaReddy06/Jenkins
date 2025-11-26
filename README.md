@@ -37,12 +37,10 @@ Set up a network for Jenkins and Docker communication:
 
 docker network create jenkins
 
-text
 
 Verify the network:
 docker network ls
 
-text
 
 ---
 
@@ -61,7 +59,6 @@ docker run --name jenkins-blueocean --restart=on-failure --detach ^
 --publish 50000:50000 ^
 myjenkins-blueocean:2.528.2-1
 
-text
 
 ---
 
@@ -83,7 +80,6 @@ text
 Visit:
 http://localhost:8080
 
-text
 You will see the Unlock Jenkins screen.
 
 ---
@@ -94,7 +90,6 @@ Retrieve the password for Jenkins unlock:
 
 docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
 
-text
 
 Paste this password into the Jenkins UI.
 
@@ -117,8 +112,6 @@ text
 **View running containers:**
 docker ps
 
-text
-
 ---
 
 ### 📌 Important Notes
@@ -127,7 +120,7 @@ text
 - After reboot, simply use:
 docker start jenkins-blueocean
 
-text
+
 - No need to rebuild or re-run full setup.
 
 ---
