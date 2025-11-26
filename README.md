@@ -1,29 +1,39 @@
-🚀 Jenkins Setup Using Docker (Blue Ocean + Docker Pipeline)
+🛠️ Jenkins Setup Using Docker (Blue Ocean + Docker Pipeline)
 
-This guide explains how to install and run Jenkins using Docker, build the Jenkins image, configure networking, unlock Jenkins, and manage the Jenkins container.
+This guide explains how to install and run Jenkins inside Docker, build the Jenkins image, configure networking, unlock Jenkins, and manage the Jenkins container.
 
-📌 1. Clone the Repository
+📁 Prerequisites
+
+Docker installed
+
+Git installed
+
+Windows PowerShell / Linux Terminal
+
+Internet connection
+
+📥 1. Clone the Repository
 git clone https://github.com/SahanaReddy06/Jenkins
 
 
-Downloads Jenkins project files from GitHub.
+Purpose: Downloads the Jenkins project files from GitHub.
 
-📌 2. Build the Jenkins Docker Image
+🏗️ 2. Build the Jenkins Docker Image
 docker build -t myjenkins-blueocean:2.528.2-1 .
 
 
-Builds a custom Jenkins image using the Dockerfile in the current directory.
+Purpose: Builds a custom Jenkins image using the Dockerfile in the current directory.
 
-📌 3. Create a Docker Network
+🌐 3. Create a Docker Network
 docker network create jenkins
 
 
-Creates an isolated Docker network for Jenkins + Docker communication.
+Purpose: Creates an isolated network for Jenkins + Docker communication.
 
-✔️ Verify network
+✔ Verify Network
 docker network ls
 
-📌 4. Run Jenkins Container
+🚀 4. Run Jenkins Container
 
 Use this PowerShell-compatible command:
 
@@ -38,25 +48,25 @@ docker run --name jenkins-blueocean --restart=on-failure --detach ^
   --publish 50000:50000 ^
   myjenkins-blueocean:2.528.2-1
 
-✔️ What this command does
+📌 What This Command Does
 
 Creates container: jenkins-blueocean
 
-Restarts automatically on failure
+Auto-restarts on failure
 
-Runs in background (--detach)
+Runs in background
 
-Connects to jenkins Docker network
+Connects to: jenkins Docker network
 
-Sets required Docker environment variables
+Environment variables set: Docker host + TLS
 
-Mounts volumes:
+Volumes mounted:
 
-jenkins-data → Jenkins home directory
+jenkins-data → Stores Jenkins configuration
 
 jenkins-docker-certs → Docker certificates
 
-Exposes ports:
+Ports exposed:
 
 8080 → Jenkins UI
 
@@ -64,27 +74,26 @@ Exposes ports:
 
 Uses image: myjenkins-blueocean:2.528.2-1
 
-📌 5. Open Jenkins in Browser
+🌍 5. Open Jenkins in Browser
 
 Visit:
 
-👉 http://localhost:8080
+http://localhost:8080
 
-You will see the Unlock Jenkins page.
 
-📌 6. Get Jenkins Initial Admin Password
+You will see the Unlock Jenkins screen.
+
+🔑 6. Get Jenkins Initial Admin Password
 docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
 
 
-Shows the initial admin password.
+Copy and paste this password into the Jenkins UI.
 
-Copy/paste into Jenkins UI.
+🔧 7. Start / Stop Jenkins Later
 
-📌 7. Start / Stop Jenkins Later
+⚠️ Do NOT run the full docker run command again after the first setup.
 
-Do NOT run the full docker run command again.
-
-▶️ Start Jenkins
+▶ Start Jenkins
 docker start jenkins-blueocean
 
 ⏹ Stop Jenkins
@@ -93,21 +102,21 @@ docker stop jenkins-blueocean
 🔄 Restart Jenkins
 docker restart jenkins-blueocean
 
-📦 Check running containers
+📦 Check Running Containers
 docker ps
 
 📌 8. Important Notes
 
-Jenkins data is stored in jenkins-data volume (persistent).
+All Jenkins data is stored inside the jenkins-data Docker volume.
 
-After system reboot, just run:
+After a system reboot, simply run:
 
 docker start jenkins-blueocean
 
 
-No need to rebuild or rerun the full command.
+No need to rebuild the image again.
 
-🎉 Jenkins is Ready!
+🎉 Jenkins Is Ready
 
 You can now:
 
@@ -117,6 +126,6 @@ Create CI/CD pipelines
 
 Build & deploy applications
 
-Configure GitHub webhooks
+Connect GitHub webhooks
 
 Use Docker inside Jenkins
