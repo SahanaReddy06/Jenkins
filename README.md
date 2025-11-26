@@ -135,16 +135,147 @@ You can now:
 - Connect GitHub webhooks
 - Use Docker inside Jenkins
 
-This markup (Markdown) will render the formatting as shown in your sample image, with bold section headers, code blocks for commands, and lists for instructions.​
 
-Related
+\documentclass[12pt,a4paper]{article}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{listings}
 
-Convert this content into HTML markup
+\title{\textbf{\Large 🚀 Jenkins Setup Using Docker (Blue Ocean + Docker Pipeline)}}
+\author{}
+\date{}
 
-Provide a Markdown version with headings and code blocks
+\begin{document}
+\maketitle
 
-Generate an XML representation for data interchange
+\section*{📁 \textbf{Prerequisites}}
 
-Create a LaTeX formatted document from this text
+\begin{itemize}[itemsep=4pt]
+    \item Docker installed
+    \item Git installed
+    \item Windows PowerShell or Linux Terminal
+    \item Internet connection
+\end{itemize}
 
-Produce a lightweight reStructuredText output
+\section*{📌 \textbf{1. Clone the Repository}}
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+git clone https://github.com/SahanaReddy06/Jenkins
+\end{lstlisting}
+
+\section*{📌 \textbf{2. Build the Jenkins Docker Image}}
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker build -t myjenkins-blueocean:2.528.2-1 .
+\end{lstlisting}
+
+\textbf{Explanation:}  
+Builds a custom Jenkins image using the Dockerfile.
+
+\section*{🌐 \textbf{3. Create a Docker Network}}
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker network create jenkins
+\end{lstlisting}
+
+Creates an isolated network for Jenkins and Docker communication.
+
+\textbf{Verify the network:}
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker network ls
+\end{lstlisting}
+
+\section*{🐳 \textbf{4. Run Jenkins Container}}
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker run --name jenkins-blueocean --restart=on-failure --detach ^
+  --network jenkins --env DOCKER_HOST=tcp://docker:2376 ^
+  --env DOCKER_CERT_PATH=/certs/client --env DOCKER_TLS_VERIFY=1 ^
+  --volume jenkins-data:/var/jenkins_home ^
+  --volume jenkins-docker-certs:/certs/client:ro ^
+  --publish 8080:8080 --publish 50000:50000 myjenkins-blueocean:2.528.2-1
+\end{lstlisting}
+
+\textbf{This command does:}
+
+\begin{itemize}[itemsep=4pt]
+    \item Creates container: \texttt{jenkins-blueocean}
+    \item Auto restarts on failure
+    \item Runs in background
+    \item Connects to the \texttt{jenkins} network
+    \item Sets Docker environment variables
+    \item Mounts volumes:
+    \begin{itemize}
+        \item \texttt{jenkins-data} → Jenkins home
+        \item \texttt{jenkins-docker-certs} → TLS certs
+    \end{itemize}
+    \item Exposes ports: 8080 (UI), 50000 (Agent)
+    \item Uses image: \texttt{myjenkins-blueocean:2.528.2-1}
+\end{itemize}
+
+\section*{🌐 \textbf{5. Open Jenkins in Browser}}
+
+Visit:  
+\url{http://localhost:8080}
+
+You will see the \textbf{Unlock Jenkins} page.
+
+\section*{🔑 \textbf{6. Get Jenkins Initial Admin Password}}
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
+\end{lstlisting}
+
+Copy and paste this password into the Jenkins UI.
+
+\section*{🔄 \textbf{7. Start / Stop Jenkins}}
+
+\textbf{Start Jenkins}
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker start jenkins-blueocean
+\end{lstlisting}
+
+\textbf{Stop Jenkins}
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker stop jenkins-blueocean
+\end{lstlisting}
+
+\textbf{Restart Jenkins}
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker restart jenkins-blueocean
+\end{lstlisting}
+
+\textbf{View running containers}
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker ps
+\end{lstlisting}
+
+\section*{📦 \textbf{8. Important Notes}}
+
+\begin{itemize}[itemsep=4pt]
+    \item Jenkins data is stored in the \texttt{jenkins-data} volume.
+    \item After system reboot, simply run:
+\end{itemize}
+
+\begin{lstlisting}[basicstyle=\ttfamily]
+docker start jenkins-blueocean
+\end{lstlisting}
+
+\begin{itemize}
+    \item No need to rebuild the Docker image every time.
+\end{itemize}
+
+\section*{🎉 \textbf{Jenkins is Ready!}}
+
+You can now:
+\begin{itemize}[itemsep=4pt]
+    \item Install plugins
+    \item Setup CI/CD pipelines
+    \item Connect GitHub webhooks
+    \item Build and deploy applications
+    \item Use Docker inside Jenkins
+\end{itemize}
+
+\end{document}
