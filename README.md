@@ -1,12 +1,12 @@
 🚀 Jenkins Setup Using Docker (Blue Ocean + Docker Pipeline)
 
-This guide explains how to install and run Jenkins using Docker, build the Jenkins image, configure networking, unlock Jenkins, and start/stop the container.
+This guide explains how to install and run Jenkins using Docker, build the Jenkins image, configure networking, unlock Jenkins, and manage the Jenkins container.
 
 📌 1. Clone the Repository
 git clone https://github.com/SahanaReddy06/Jenkins
 
 
-Downloads the Jenkins project files from GitHub.
+Downloads Jenkins project files from GitHub.
 
 📌 2. Build the Jenkins Docker Image
 docker build -t myjenkins-blueocean:2.528.2-1 .
@@ -18,7 +18,7 @@ Builds a custom Jenkins image using the Dockerfile in the current directory.
 docker network create jenkins
 
 
-Creates an isolated network for Jenkins + Docker to communicate safely.
+Creates an isolated network for Jenkins + Docker communication.
 
 Verify the network:
 
@@ -39,9 +39,9 @@ docker run --name jenkins-blueocean --restart=on-failure --detach ^
 
 Creates a container: jenkins-blueocean
 
-Auto restarts on failure
+Restarts automatically on failure
 
-Runs in background (detached)
+Runs in detached mode
 
 Connects to the jenkins network
 
@@ -49,7 +49,7 @@ Sets Docker environment variables
 
 Mounts volumes:
 
-jenkins-data → Jenkins home
+jenkins-data → Jenkins home directory
 
 jenkins-docker-certs → Docker certificates
 
@@ -59,28 +59,27 @@ Exposes ports:
 
 50000 → Jenkins agents
 
-Uses image: myjenkins-blueocean:2.528.2-1
+Uses the custom image: myjenkins-blueocean:2.528.2-1
 
 📌 5. Open Jenkins in Browser
 
-Once the container starts, visit:
+Visit:
 
 👉 http://localhost:8080
 
-This will display the Unlock Jenkins page.
+You will see the Unlock Jenkins page.
 
 📌 6. Get Jenkins Initial Admin Password
 docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
 
 
-Displays the initial password stored inside the container.
-Copy it and paste into Jenkins UI to unlock.
+Displays the initial admin password stored inside the container.
+
+Copy and paste it into the Jenkins UI to unlock Jenkins.
 
 📌 7. Start/Stop Jenkins Later
 
-After the first setup, do NOT run the full docker run command again.
-
-Use these simple commands:
+After initial setup, DO NOT run the full docker run command again.
 
 ▶️ Start Jenkins
 docker start jenkins-blueocean
@@ -98,12 +97,12 @@ docker ps
 
 Jenkins configuration is stored inside the jenkins-data volume.
 
-After system restart, simply run:
+After a system restart, simply run:
 
 docker start jenkins-blueocean
 
 
-No need to rebuild the Docker image every time.
+No need to rebuild the Docker image again.
 
 🎉 Jenkins is Ready!
 
