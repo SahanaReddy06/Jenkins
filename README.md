@@ -56,7 +56,7 @@ Auto-restarts on failure
 
 Runs in background
 
-Connects to: jenkins Docker network
+Connects to network: jenkins
 
 Environment variables set: Docker host + TLS
 
@@ -70,13 +70,13 @@ Ports exposed:
 
 8080 → Jenkins UI
 
-50000 → Jenkins agent communication
+50000 → Jenkins agents
 
 Uses image: myjenkins-blueocean:2.528.2-1
 
 🌍 5. Open Jenkins in Browser
 
-Visit:
+Open:
 
 http://localhost:8080
 
@@ -87,11 +87,11 @@ You will see the Unlock Jenkins screen.
 docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
 
 
-Copy and paste this password into the Jenkins UI.
+Copy and paste the password into Jenkins to unlock.
 
 🔧 7. Start / Stop Jenkins Later
 
-⚠️ Do NOT run the full docker run command again after the first setup.
+⚠️ Do not run the full docker run command again after the first setup.
 
 ▶ Start Jenkins
 docker start jenkins-blueocean
@@ -102,21 +102,21 @@ docker stop jenkins-blueocean
 🔄 Restart Jenkins
 docker restart jenkins-blueocean
 
-📦 Check Running Containers
+📦 View Running Containers
 docker ps
 
 📌 8. Important Notes
 
-All Jenkins data is stored inside the jenkins-data Docker volume.
+All Jenkins data is stored in the jenkins-data Docker volume (persistent).
 
-After a system reboot, simply run:
+After system reboot, simply run:
 
 docker start jenkins-blueocean
 
 
-No need to rebuild the image again.
+No need to rebuild the image or re-run the full setup.
 
-🎉 Jenkins Is Ready
+🎉 Jenkins Is Ready!
 
 You can now:
 
@@ -129,3 +129,10 @@ Build & deploy applications
 Connect GitHub webhooks
 
 Use Docker inside Jenkins
+
+If you want, I can also create:
+
+✅ A separate section for Pipeline setup
+✅ A Jenkinsfile example
+✅ A Docker-in-Docker setup section
+✅ Instructions for GitHub Webhook integration
