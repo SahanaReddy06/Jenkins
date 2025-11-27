@@ -17,7 +17,6 @@ Run the below command to download Jenkins project files from GitHub:
 
 git clone https://github.com/SahanaReddy06/Jenkins
 
-text
 
 ---
 
@@ -27,7 +26,6 @@ Build a custom Jenkins image:
 
 docker build -t myjenkins-blueocean:2.528.2-1 .
 
-text
 
 ---
 
@@ -89,7 +87,6 @@ You will see the Unlock Jenkins screen.
 Retrieve the password for Jenkins unlock:
 
 docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
-
 
 Paste this password into the Jenkins UI.
 
