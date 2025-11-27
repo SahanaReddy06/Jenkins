@@ -15,7 +15,7 @@
 
 Run the below command to download Jenkins project files from GitHub:
 
-git clone https://github.com/SahanaReddy06/Jenkins
+`git clone https://github.com/SahanaReddy06/Jenkins`
 
 
 ---
@@ -24,7 +24,7 @@ git clone https://github.com/SahanaReddy06/Jenkins
 
 Build a custom Jenkins image:
 
-docker build -t myjenkins-blueocean:2.528.2-1 .
+`docker build -t myjenkins-blueocean:2.528.2-1 .`
 
 
 ---
@@ -33,11 +33,11 @@ docker build -t myjenkins-blueocean:2.528.2-1 .
 
 Set up a network for Jenkins and Docker communication:
 
-docker network create jenkins
+`docker network create jenkins`
 
 
 Verify the network:
-docker network ls
+`docker network ls`
 
 
 ---
@@ -46,7 +46,7 @@ docker network ls
 
 Use this command (PowerShell compatible):
 
-docker run --name jenkins-blueocean --restart=on-failure --detach ^
+`docker run --name jenkins-blueocean --restart=on-failure --detach ^
 --network jenkins ^
 --env DOCKER_HOST=tcp://docker:2376 ^
 --env DOCKER_CERT_PATH=/certs/client ^
@@ -55,7 +55,7 @@ docker run --name jenkins-blueocean --restart=on-failure --detach ^
 --volume jenkins-docker-certs:/certs/client:ro ^
 --publish 8080:8080 ^
 --publish 50000:50000 ^
-myjenkins-blueocean:2.528.2-1
+myjenkins-blueocean:2.528.2-1`
 
 
 ---
@@ -86,7 +86,7 @@ You will see the Unlock Jenkins screen.
 
 Retrieve the password for Jenkins unlock:
 
-docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword
+`docker exec jenkins-blueocean cat /var/jenkins_home/secrets/initialAdminPassword`
 
 Paste this password into the Jenkins UI.
 
@@ -95,19 +95,16 @@ Paste this password into the Jenkins UI.
 ### 🔧 Start / Stop Jenkins
 
 **Start Jenkins:**
-docker start jenkins-blueocean
+`docker start jenkins-blueocean`
 
-text
 **Stop Jenkins:**
-docker stop jenkins-blueocean
+`docker stop jenkins-blueocean`
 
-text
 **Restart Jenkins:**
-docker restart jenkins-blueocean
+`docker restart jenkins-blueocean`
 
-text
 **View running containers:**
-docker ps
+`docker ps`
 
 ---
 
@@ -115,7 +112,7 @@ docker ps
 
 - Jenkins data is stored in the `jenkins-data` Docker volume, so it persists.
 - After reboot, simply use:
-docker start jenkins-blueocean
+`docker start jenkins-blueocean`
 
 
 - No need to rebuild or re-run full setup.
